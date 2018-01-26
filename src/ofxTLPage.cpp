@@ -787,6 +787,10 @@ ofRectangle ofxTLPage::getDrawRect(){
 	return trackContainerRect;
 }
 
+ofRectangle ofxTLPage::getTrackPosition(string name){
+    return savedTrackPositions[name];
+}
+
 float ofxTLPage::getComputedHeight(){
 	return trackContainerRect.height;
 }

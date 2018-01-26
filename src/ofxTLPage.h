@@ -87,6 +87,7 @@ class ofxTLPage {
 	virtual float getComputedHeight();	
 	virtual float getBottomEdge();
     virtual ofRectangle getDrawRect();
+    virtual ofRectangle getTrackPosition(string name);  //lg3 - get x,y of a track
     
 	virtual void addTrack(string name, ofxTLTrack* track);
 	virtual ofxTLTrack* getTrack(string name);
