@@ -325,7 +325,7 @@ void ofxTLKeyframes::save(){
 		string xmlRep = getXMLStringForKeyframes(keyframes);
 		ofxXmlSettings savedkeyframes;
 		savedkeyframes.loadFromBuffer(xmlRep);
-		savedkeyframes.saveFile(xmlFileName);
+        savedkeyframes.saveFile(xmlFileName);
 	}
 }
 

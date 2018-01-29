@@ -94,7 +94,9 @@ void ofxTLPage::loadTracksFromFolder(string folderPath){
 //given a folder the page will look for xml files to load within that
 void ofxTLPage::saveTracksToFolder(string folderPath){
     for(int i = 0; i < headers.size(); i++){
+        cout << "tracks[header->name] " << tracks[headers[i]->name]->getName() << endl;
 		string filename = folderPath + tracks[headers[i]->name]->getXMLFileName();
+        cout << "tracks[header->name] filename " << filename << endl;
         tracks[headers[i]->name]->setXMLFileName(filename);
 		tracks[headers[i]->name]->save();
     }
@@ -574,7 +576,7 @@ ofxTLTrackHeader* ofxTLPage::getTrackHeader(ofxTLTrack* track){
 void ofxTLPage::setMinimalHeaders(bool minimal){
 	if(minimal != headersAreMinimal){
 		headersAreMinimal = minimal;
-        ofLogError("ofxTLPage::setMinimalHeaders") << "saveTrackPositions()";
+        //ofLogError("ofxTLPage::setMinimalHeaders") << "saveTrackPositions()";
 		recalculateHeight();
 	}
 }
@@ -852,7 +854,7 @@ void ofxTLPage::saveTrackPositions(){
 	string xmlPageName = name;
 	ofStringReplace(xmlPageName," ", "_");
 	string trackPositionsFile = ofToDataPath(timeline->getWorkingFolder() + timeline->getName() + "_" +  xmlPageName + "_trackPositions.xml");
-    ofLogError("ofxTLPage::saveTrackPositions") << trackPositionsFile;
+    //ofLogError("ofxTLPage::saveTrackPositions") << trackPositionsFile;
 	trackPositions.saveFile( trackPositionsFile );
 }
 
