@@ -69,6 +69,7 @@
 #include "ofxTLCameraTrack.h"
 #include "ofxTLColors.h"
 #include "ofxTLLFO.h"
+//#include "ofxTLNotes.h"
 
 #ifdef TIMELINE_VIDEO_INCLUDED
 #include "ofxTLVideoTrack.h"
@@ -141,7 +142,7 @@ class ofxTimeline : ofThread {
     virtual void show();
 	virtual void hide();
 	virtual bool getIsShowing();
-	virtual void draw(bool drawTickerMarks=true); //tikerMarks consumes a lot of resources
+    virtual void draw(bool drawTickerMarks=true, bool onlyTicker=false); //tikerMarks consumes a lot of resources / onlyTicker: for hidden mode
     
 	virtual void mousePressed(ofMouseEventArgs& args);
 	virtual void mouseMoved(ofMouseEventArgs& args);
@@ -374,6 +375,17 @@ class ofxTimeline : ofThread {
 	bool isSwitchOn(string name, float atTime);
 	bool isSwitchOn(string name, int atFrame);
 	
+    /*
+    //moved to ofxTLVMMNotes
+    ofxTLNotes* addNotes(string name);
+    ofxTLNotes* addNotes(string name, string xmlFileName);
+    
+    
+    int getNote(string name);
+    int getNote(string name, float atTime);
+    int getNote(string name, int atFrame);
+    */
+    
     ofxTLBangs* addBangs(string name);
 	ofxTLBangs* addBangs(string name, string xmlFileName);
     

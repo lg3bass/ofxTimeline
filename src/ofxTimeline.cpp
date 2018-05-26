@@ -1105,13 +1105,13 @@ void ofxTimeline::setWidth(float newWidth){
 void ofxTimeline::setHeight(float height){
 	if(height != totalDrawRect.height){
 		float staticHeight = totalDrawRect.height - currentPage->getDrawRect().height;
-		cout << "the static height is " << staticHeight << endl;
+        cout << "ofxTimeline: the static height is " << staticHeight << endl;
 		currentPage->setExpandToHeight(height - staticHeight);
 		currentPage->evenlyDistributeTrackHeights();
 		updatePagePositions();
         ofEventArgs args;
         ofNotifyEvent(events().viewWasResized, args);
-		cout << "desired height was " << height << " resulting height " << totalDrawRect.height << endl;
+		cout << "ofxTimeline: desired height was " << height << " resulting height " << totalDrawRect.height << endl;
 	}
 }
 
@@ -1504,7 +1504,7 @@ void ofxTimeline::exit(ofEventArgs& args){
 //    timeControl = NULL;
 //
 	if(isOnThread){
-		ofLogError("ofxTimeline.cpp") << "waiting for thread" << endl;
+		ofLogNotice("ofxTimeline::exit") << "waiting for thread" << endl;
 		waitForThread(true);
 	}
 
@@ -1627,7 +1627,7 @@ void ofxTimeline::checkLoop(){
     }
 }
 
-void ofxTimeline::draw(bool drawTickerMarks){
+void ofxTimeline::draw(bool drawTickerMarks, bool onlyTicker){
 
 	if(isSetup && isShowing){
 		ofPushStyle();
@@ -1640,7 +1640,7 @@ void ofxTimeline::draw(bool drawTickerMarks){
 		ofEnableAlphaBlending();
 
         ofSetColor(colors.guiBackgroundColor);
-		ofDrawRectangle(totalDrawRect);
+		ofRect(totalDrawRect);
 
 		ofSetColor(255);
 
@@ -1650,9 +1650,16 @@ void ofxTimeline::draw(bool drawTickerMarks){
 
 		ofPushStyle();
         
-		currentPage->drawWhenNotDragging();//tweaked
-		
-        if(showZoomer)zoomer->_draw();
+        //original
+        //currentPage->drawWhenNotDragging();//tweaked
+        
+        
+        if (onlyTicker == false) {
+            currentPage->drawWhenNotDragging();//tweaked
+        }
+        
+         
+		if(showZoomer)zoomer->_draw();
 
 		//draw these because they overlay the rest of the timeline with info
         //ticker->_draw();
@@ -1995,6 +2002,45 @@ bool ofxTimeline::isSwitchOn(string trackName){
 bool ofxTimeline::isSwitchOn(string trackName, int atFrame){
 	return isSwitchOn(trackName, timecode.secondsForFrame(atFrame));
 }
+
+/*
+//moved to ofxTLVMMNotes
+ofxTLNotes* ofxTimeline::addNotes(string trackName){
+    string uniqueName = confirmedUniqueName(trackName);
+    return addNotes(uniqueName, nameToXMLName(uniqueName));
+}
+
+ofxTLNotes* ofxTimeline::addNotes(string trackName, string xmlFileName){
+    ofxTLNotes* newNotes = new ofxTLNotes();
+    newNotes->setCreatedByTimeline(true);
+    newNotes->setXMLFileName(xmlFileName);
+    addTrack(confirmedUniqueName(trackName), newNotes);
+    return newNotes;
+}
+
+int ofxTimeline::getNote(string trackName){
+    if(!hasTrack(trackName)){
+        ofLogError("ofxTimeline -- Couldn't find notes track " + trackName);
+        return 0;
+    }
+    
+    ofxTLNotes* notes = (ofxTLNotes*)trackNameToPage[trackName]->getTrack(trackName);
+    return notes->getNote();
+}
+
+int ofxTimeline::getNote(string trackName, float atTime){
+    if(!hasTrack(trackName)){
+        ofLogError("ofxTimeline -- Couldn't find notes track " + trackName);
+        return 0;
+    }
+    ofxTLNotes* notes = (ofxTLNotes*)trackNameToPage[trackName]->getTrack(trackName);
+    return notes->getNoteAtPercent(atTime/durationInSeconds);
+}
+
+int ofxTimeline::getNote(string name, int atFrame){
+    return getNote(name, timecode.secondsForFrame(atFrame));
+}
+*/
 
 ofxTLBangs* ofxTimeline::addBangs(string trackName){
     string uniqueName = confirmedUniqueName(trackName);
