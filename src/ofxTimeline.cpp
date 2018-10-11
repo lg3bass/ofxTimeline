@@ -1149,7 +1149,7 @@ ofVec2f ofxTimeline::getBottomRight(){
 
 void ofxTimeline::updatePagePositions(){
 	if(isSetup){
-		ofVec2f pageOffset = ofVec2f(offset.x, ticker->getBottomEdge());
+		ofVec2f pageOffset = ofVec2f(offset.x, ticker->getBottomEdge()+40);
 		for(int i = 0; i < pages.size(); i++){
 			pages[i]->setContainer(pageOffset, width);
 		}
